@@ -155,14 +155,10 @@ public class DataCarrier {
 		
 		for(int i = 0; i<5; i++){
 			String MethodName = "getP".concat(Integer.toString(i));
-			try{
 			Method GetFunc = this.getClass().getDeclaredMethod(MethodName, (Class[]) null); //returns the function 
 			GetFunc.setAccessible(true); //Makes it possible to invoke the function
 			int stateParam = (int) GetFunc.invoke(this);
 			s=s.concat(Integer.toString(stateParam));
-			}catch(SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-				System.out.println(e);
-			}
 		}
 //		s=s.concat(Integer.toString(getP0()));
 //		s=s.concat(Integer.toString(getP1()));

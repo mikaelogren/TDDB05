@@ -37,8 +37,6 @@ public class Main {
 		dc.setState(1, 0, 1, 0, 1);
 		dc.setValue("State two");
 		System.out.println(dc.getValue());
-		dc.setState(1, 1, 1, 1, 1);
-		System.out.println(dc.getValue());
 	 }
 	
 }

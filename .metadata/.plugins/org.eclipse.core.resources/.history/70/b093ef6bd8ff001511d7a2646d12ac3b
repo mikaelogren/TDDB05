@@ -61,18 +61,8 @@ public class DataCarrier {
 	private String getV30() { return stateValues[30]; }
 	private String getV31() { return stateValues[31]; }
 
-	public String getValue() {
-		String BinState = getBinState();
-		int IntState = Integer.parseInt(BinState, 2); //Converts the binary string into an integer
-		String MethodName = "getV".concat(Integer.toString(IntState));
-		try{
-			Method SetFunc = this.getClass().getDeclaredMethod(MethodName, (Class[]) null); //returns the function
-			SetFunc.setAccessible(true); //Makes it possible to invoke the function
-			return (String) SetFunc.invoke(this);
-			
-		}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-			System.out.println(e);
-		}
+	public  String getValue() {
+		/* Your code here */
 		
 		return null;
 	}
@@ -131,16 +121,21 @@ public class DataCarrier {
 		setP3( p3 ); 
 		setP4( p4 ); 
 	}
- 
-
+/*Need to get what state we're in by looking at which the five state parameters.
+ * Somehow we need to convert them to an integer value.
+ * Then without using a big switch or something like that we need to call the corresponding set-function
+ * Then we need to set that state to the value given. 
+ * 
+ * getMethod(String name) är intressant. Returnar en Method object för en metod som heter name 
+*/
 	public  void setValue( String sV ) {
 		String BinState = getBinState();
-		int IntState = Integer.parseInt(BinState, 2); //Converts the binary string into an integer
+		int IntState = Integer.parseInt(BinState, 2);
 		String MethodName = "setV".concat(Integer.toString(IntState));
 		
 		try{
-			Method SetFunc = this.getClass().getDeclaredMethod(MethodName, String.class); //returns the function 
-			SetFunc.setAccessible(true); //Makes it possible to invoke the function
+			Method SetFunc = this.getClass().getDeclaredMethod(MethodName, String.class);
+			SetFunc.setAccessible(true);
 			SetFunc.invoke(this, sV);
 			
 		}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
@@ -153,22 +148,11 @@ public class DataCarrier {
 		
 		String s = "";
 		
-		for(int i = 0; i<5; i++){
-			String MethodName = "getP".concat(Integer.toString(i));
-			try{
-			Method GetFunc = this.getClass().getDeclaredMethod(MethodName, (Class[]) null); //returns the function 
-			GetFunc.setAccessible(true); //Makes it possible to invoke the function
-			int stateParam = (int) GetFunc.invoke(this);
-			s=s.concat(Integer.toString(stateParam));
-			}catch(SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-				System.out.println(e);
-			}
-		}
-//		s=s.concat(Integer.toString(getP0()));
-//		s=s.concat(Integer.toString(getP1()));
-//		s=s.concat(Integer.toString(getP2()));
-//		s=s.concat(Integer.toString(getP3()));
-//		s=s.concat(Integer.toString(getP4()));
+		s=s.concat(Integer.toString(getP0()));
+		s=s.concat(Integer.toString(getP1()));
+		s=s.concat(Integer.toString(getP2()));
+		s=s.concat(Integer.toString(getP3()));
+		s=s.concat(Integer.toString(getP4()));
 		return s;
 			
 	}

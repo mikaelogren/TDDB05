@@ -32,13 +32,8 @@ public class Main {
 			System.out.println( "NOT EQUAL" );
 		}
 		DataCarrier dc = new DataCarrier(1,1,1,1,1,"Hello");
-		System.out.println(dc.getValue());
+
 		
-		dc.setState(1, 0, 1, 0, 1);
-		dc.setValue("State two");
-		System.out.println(dc.getValue());
-		dc.setState(1, 1, 1, 1, 1);
-		System.out.println(dc.getValue());
 	 }
 	
 }
