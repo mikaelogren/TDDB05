@@ -134,11 +134,19 @@ public class DataCarrier {
 		String MethodName = "setV".concat(Integer.toString(IntState));
 		
 		try{
-			Method SetFunc = this.getClass().getDeclaredMethod(MethodName, String.class);
+			Method SetFunc = this.getClass().getDeclaredMethod(MethodName, String);
 			SetFunc.setAccessible(true);
 			SetFunc.invoke(this, sV);
 			
-		}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+		}catch (SecurityException e) {
+			System.out.println(e);
+		}catch (NoSuchMethodException e) {
+			System.out.println(e);
+		}catch (IllegalArgumentException e) {
+			System.out.println(e);
+		}catch (IllegalAccessException e) { 
+			System.out.println(e);
+		}catch (InvocationTargetException e) { 
 			System.out.println(e);
 		}
 	}

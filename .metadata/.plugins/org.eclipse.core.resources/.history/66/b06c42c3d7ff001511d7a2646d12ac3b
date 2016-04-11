@@ -134,7 +134,7 @@ public class DataCarrier {
 		String MethodName = "setV".concat(Integer.toString(IntState));
 		
 		try{
-			Method SetFunc = this.getClass().getDeclaredMethod(MethodName, String.class);
+			Method SetFunc = this.getClass().getDeclaredMethod(MethodName);
 			SetFunc.setAccessible(true);
 			SetFunc.invoke(this, sV);
 			
