@@ -64,22 +64,19 @@ public class DataCarrier {
 	public String getValue() {
 		
 		String binState = getBinState();
+		int intState = Integer.parseInt(binState, 2); //Converts the binary string into an integer
+		String methodName = "getV".concat(Integer.toString(intState));
 		
-		if(binState != null){ //If valid state
-			int intState = Integer.parseInt(binState, 2); //Converts the binary string into an integer
-			String methodName = "getV".concat(Integer.toString(intState));
-			try{
-				Method getFunc = this.getClass().getDeclaredMethod(methodName, (Class[]) null); //returns the function
-				getFunc.setAccessible(true); //Makes it possible to invoke the function
-				return (String) getFunc.invoke(this);
-				
-			}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-				System.out.println(e);
-			}
+		try{
+			Method getFunc = this.getClass().getDeclaredMethod(methodName, (Class[]) null); //returns the function
+			getFunc.setAccessible(true); //Makes it possible to invoke the function
+			return (String) getFunc.invoke(this);
+			
+		}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			System.out.println(e);
 		}
 		
 		return null;
-		
 	}
 
 
@@ -122,7 +119,7 @@ public class DataCarrier {
 	private void setV30( String s ) { stateValues[30] = s; } 
 	private void setV31( String s ) { stateValues[31] = s; } 
 
-	public void setState( 
+	public  void setState( 
 					   int p0,
 					   int p1, 
 					   int p2,
@@ -138,25 +135,23 @@ public class DataCarrier {
 	}
  
 
-	public void setValue( String sV ) {
+	public  void setValue( String sV ) {
 		
 		String binState = getBinState();
+		int intState = Integer.parseInt(binState, 2); //Converts the binary string into an integer
+		String methodName = "setV".concat(Integer.toString(intState));
 		
-		if(binState != null){ //If valid state
-			int intState = Integer.parseInt(binState, 2); //Converts the binary string into an integer
-			String methodName = "setV".concat(Integer.toString(intState));
-			try{
-				Method setFunc = this.getClass().getDeclaredMethod(methodName, String.class); //returns the function 
-				setFunc.setAccessible(true); //Makes it possible to invoke the function
-				setFunc.invoke(this, sV);
-				
-			}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-				System.out.println(e);
-			}
+		try{
+			Method setFunc = this.getClass().getDeclaredMethod(methodName, String.class); //returns the function 
+			setFunc.setAccessible(true); //Makes it possible to invoke the function
+			setFunc.invoke(this, sV);
+			
+		}catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			System.out.println(e);
 		}
 	}
 	
-	//Returns the current state as a binary string and null if invalid state"
+	//Returns the current state as a binary string"
 	private String getBinState(){
 		
 		String s = "";
@@ -167,10 +162,6 @@ public class DataCarrier {
 				Method getFunc = this.getClass().getDeclaredMethod(methodName, (Class[]) null); 	//returns the function 
 				getFunc.setAccessible(true); 	//Makes it possible to invoke the function
 				int stateParam = (int) getFunc.invoke(this);
-				
-				if(!validStateParam(stateParam)){
-					return null;
-				}
 				s=s.concat(Integer.toString(stateParam));
 				
 			}catch(SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
@@ -182,9 +173,9 @@ public class DataCarrier {
 			
 	}
 	
-	private boolean validStateParam(int stateParam){
+	private boolean checkValidState(int stateParam){
 		boolean valid = false;
-		if(stateParam == 0 || stateParam == 1){
+		if(stateParam >= 0 && stateParam <= 31){
 			valid = true;
 		}
 		return valid;

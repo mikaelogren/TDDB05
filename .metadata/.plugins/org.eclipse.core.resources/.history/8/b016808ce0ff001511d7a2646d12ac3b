@@ -64,8 +64,8 @@ public class DataCarrier {
 	public String getValue() {
 		
 		String binState = getBinState();
-		
-		if(binState != null){ //If valid state
+		if(binState != null){
+			
 			int intState = Integer.parseInt(binState, 2); //Converts the binary string into an integer
 			String methodName = "getV".concat(Integer.toString(intState));
 			try{
@@ -141,10 +141,10 @@ public class DataCarrier {
 	public void setValue( String sV ) {
 		
 		String binState = getBinState();
-		
-		if(binState != null){ //If valid state
+		if(binState != null){
 			int intState = Integer.parseInt(binState, 2); //Converts the binary string into an integer
 			String methodName = "setV".concat(Integer.toString(intState));
+			
 			try{
 				Method setFunc = this.getClass().getDeclaredMethod(methodName, String.class); //returns the function 
 				setFunc.setAccessible(true); //Makes it possible to invoke the function
@@ -156,7 +156,7 @@ public class DataCarrier {
 		}
 	}
 	
-	//Returns the current state as a binary string and null if invalid state"
+	//Returns the current state as a binary string"
 	private String getBinState(){
 		
 		String s = "";
@@ -168,7 +168,7 @@ public class DataCarrier {
 				getFunc.setAccessible(true); 	//Makes it possible to invoke the function
 				int stateParam = (int) getFunc.invoke(this);
 				
-				if(!validStateParam(stateParam)){
+				if(stateParam != 0 || stateParam != 1){
 					return null;
 				}
 				s=s.concat(Integer.toString(stateParam));
@@ -182,9 +182,9 @@ public class DataCarrier {
 			
 	}
 	
-	private boolean validStateParam(int stateParam){
+	private boolean checkValidState(int stateParam){
 		boolean valid = false;
-		if(stateParam == 0 || stateParam == 1){
+		if(stateParam >= 0 && stateParam <= 31){
 			valid = true;
 		}
 		return valid;
