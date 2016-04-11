@@ -1,0 +1,25 @@
+
+public class Main {
+	
+	public static void main(String[] args) {
+		// QUESTION 1
+		Storage<Object> aStorage = new Storage<Object>();
+		Storage<String> sStorage = new Storage<String>();
+		
+		//QUESTION 2
+		Class baCls = BankAccount.class;
+		
+		try {
+			Object myAccount = baCls.newInstance();
+			aStorage.setValue( myAccount );
+			// Deposit
+			myAccount.deposit( 15 );
+		}
+		
+		catch ( InstantiationException e ) {
+		}
+		catch ( IllegalAccessException e ) {
+		} 
+	 }
+	
+}
